@@ -1,12 +1,8 @@
 import os
 import sys
-import getopt
-import subprocess
 from comet import Comet
 import numpy as np
-
 import PyXMCDA
-
 from optparse import OptionParser
 
 
@@ -24,7 +20,6 @@ def main(argv=None):
     in_dir = str(options.in_dir)
     out_dir = str(options.out_dir)
     print(in_dir)
-    in_dir = "."
     # Creating a list for error messages
     errorList = []
 
@@ -60,7 +55,6 @@ def main(argv=None):
             if not perfTable:
                 errorList.append("No performance table found. Is your performance table file correct ?")
 
-
     if not errorList:
         print(perfTable)
         table = []
@@ -73,9 +67,33 @@ def main(argv=None):
         comet = Comet(table, 3)
         ranking = comet.evaluate()
         print(ranking)
+
+        fileAltValues = open(out_dir+"/alternativesValues.xml", 'w')
+        PyXMCDA.writeHeader(fileAltValues)
+        fileAltValues.write("<alternativesValues>\n")
+        for i, alt in enumerate(alternativesId):
+            fileAltValues.write("<alternativeValue><alternativeID>" + alt + "</alternativeID><value>")
+            val = ranking[i]
+            fileAltValues.write("<real>" + str(val) + "</real></value></alternativeValue>\n")
+        fileAltValues.write("</alternativesValues>\n")
+        PyXMCDA.writeFooter(fileAltValues)
+        fileAltValues.close()
+
         ranking = np.array(list(zip(["A" + str(x) for x in range(len(ranking))], ranking)))
         print(np.flipud(ranking[ranking[:, 1].argsort()]))
+
     print(errorList)
+    fileMessages = open(out_dir + "/messages.xml", 'w')
+    PyXMCDA.writeHeader(fileMessages)
+
+    if not errorList:
+        PyXMCDA.writeLogMessages(fileMessages, ["Execution ok"])
+    else:
+        PyXMCDA.writeErrorMessages(fileMessages, errorList)
+
+    PyXMCDA.writeFooter(fileMessages)
+    fileMessages.close()
 
 if __name__ == "__main__":
-    sys.exit(main(["-i .", "-o ."]))
+    #sys.exit(main(["-i ./tests/in1", "-o", "./tests/out1"]))
+    sys.exit(main())
