@@ -4,8 +4,6 @@ import itertools as it
 
 
 
-
-
 class Comet:
     def __init__(self, alternatives, num_cv, mej=None):
         self.alternatives = np.array(alternatives)
@@ -19,6 +17,8 @@ class Comet:
         self.CVs = np.array(self.CVs)
         if mej is None:
             self.mej = self.generate_mej()
+        else:
+            self.mej = mej
         self.fit()
 
     @staticmethod
@@ -56,6 +56,7 @@ class Comet:
         self.p = self.calc_p()
         self.COs = list(it.product(*self.CVs))
         self.rules = list(zip(self.COs, self.p))
+        print(self.mej)
         self.print_rules()
 
     def generate_mej(self):
@@ -67,8 +68,8 @@ class Comet:
         for i in range(size):
             for j in range(i,size):
                 mej[i, j] = 1 - mej[j, i]
-        #plt.imshow(mej)
-        #plt.show()
+        plt.imshow(mej)
+        plt.show()
         return mej
 
     def calc_sj(self):

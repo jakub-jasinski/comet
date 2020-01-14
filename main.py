@@ -4,6 +4,7 @@ from comet import Comet
 import numpy as np
 import PyXMCDA
 from optparse import OptionParser
+import matplotlib.pyplot as plt
 
 
 def main(argv=None):
@@ -18,6 +19,7 @@ def main(argv=None):
     (options, args) = parser.parse_args(argv[1:])
 
     in_dir = str(options.in_dir)
+    in_dir = "./tests/in1"
     out_dir = str(options.out_dir)
     print(in_dir)
     # Creating a list for error messages
@@ -56,15 +58,16 @@ def main(argv=None):
                 errorList.append("No performance table found. Is your performance table file correct ?")
 
     if not errorList:
-        print(perfTable)
         table = []
         for key, value in perfTable.items():
-            row = [ val for val in value.values()]
+            row = [val for val in value.values()]
             table.append(row)
         table = np.array(table)
         print(table)
 
-        comet = Comet(table, 3)
+        mej = np.genfromtxt('./tests/in1/mej.csv', delimiter=',')
+
+        comet = Comet(table, 3, mej=mej)
         ranking = comet.evaluate()
         print(ranking)
 
@@ -95,5 +98,5 @@ def main(argv=None):
     fileMessages.close()
 
 if __name__ == "__main__":
-    #sys.exit(main(["-i ./tests/in1", "-o", "./tests/out1"]))
-    sys.exit(main())
+    sys.exit(main(["-i ./tests/in1", "-o", "./tests/out1"]))
+    #sys.exit(main())

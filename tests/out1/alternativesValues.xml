@@ -3,9 +3,9 @@
 <xmcda:XMCDA xmlns:xmcda='http://www.decision-deck.org/2012/XMCDA-2.2.1' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.decision-deck.org/2012/XMCDA-2.2.1 http://www.decision-deck.org/xmcda/_downloads/XMCDA-2.2.1.xsd'>
 
 <alternativesValues>
-<alternativeValue><alternativeID>a1</alternativeID><value><real>0.23076923076923078</real></value></alternativeValue>
-<alternativeValue><alternativeID>a2</alternativeID><value><real>0.6923076923076923</real></value></alternativeValue>
-<alternativeValue><alternativeID>a3</alternativeID><value><real>0.4768741417582465</real></value></alternativeValue>
+<alternativeValue><alternativeID>a1</alternativeID><value><real>0.9166666666666666</real></value></alternativeValue>
+<alternativeValue><alternativeID>a2</alternativeID><value><real>0.75</real></value></alternativeValue>
+<alternativeValue><alternativeID>a3</alternativeID><value><real>0.42549022848001083</real></value></alternativeValue>
 </alternativesValues>
 
 </xmcda:XMCDA>
