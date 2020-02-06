@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import itertools as it
 
 
@@ -56,8 +55,7 @@ class Comet:
         self.p = self.calc_p()
         self.COs = list(it.product(*self.CVs))
         self.rules = list(zip(self.COs, self.p))
-        print(self.mej)
-        self.print_rules()
+        #self.print_rules()
 
     def generate_mej(self):
         size = 1
@@ -68,8 +66,6 @@ class Comet:
         for i in range(size):
             for j in range(i,size):
                 mej[i, j] = 1 - mej[j, i]
-        plt.imshow(mej)
-        plt.show()
         return mej
 
     def calc_sj(self):
@@ -123,27 +119,3 @@ class Comet:
         for sample in self.alternatives:
             out.append(self._eval(sample))
         return out
-
-if __name__ == "__main__":
-    alternatives = [
-        [32, 15, 8, 60, 50, 20],
-        [25, 15, 4, 60, 60, 30],
-        [42, 10, 18, 50, 40, 50],
-        [33, 5, 12, 50, 60, 45],
-        [33, 5, 12, 50, 60, 45],
-        [45, 5, 20, 30, 60, 80],
-        [23, 10, 3, 60, 80, 60]
-        ]
-
-    A = np.array(alternatives)
-
-    ranges = []
-
-    for i in range(A.shape[1]):
-        ranges.append((min(A[:, i]), max(A[:, i])))
-
-    comet = Comet(alternatives, 3)
-    ranking = comet.evaluate()
-    print(ranking)
-    ranking = np.array(list(zip(["A"+str(x) for x in range(len(ranking))], ranking)))
-    print(np.flipud(ranking[ranking[:, 1].argsort()]))
